@@ -5,13 +5,13 @@ const workoutPlan = {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Keep body straight, elbows at 45°",
+      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Keep body straight, elbows at 45°", goal: 20,
         steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders", goal: 15,
         steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface", goal: 20,
         steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus", goal: 15,
         steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
@@ -19,15 +19,15 @@ const workoutPlan = {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Straight line head to heels, squeeze glutes",
+      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Straight line head to heels, squeeze glutes", goal: 60,
         steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
-      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground, don't pull neck",
+      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground, don't pull neck", goal: 25,
         steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips off floor, control the movement",
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips off floor, control the movement", goal: 20,
         steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
-      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled, lower back flat",
+      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled, lower back flat", goal: 12,
         steps: ["Lie back, arms straight up, knees at 90°", "Lower opposite arm and leg toward the floor", "Return to start, switch sides and repeat"] },
-      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Keep hips level, drive knees to chest",
+      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Keep hips level, drive knees to chest", goal: 40,
         steps: ["High plank position, hips level with shoulders", "Drive one knee explosively toward your chest", "Switch legs rapidly, keep core braced throughout"] },
     ],
   },
@@ -35,13 +35,13 @@ const workoutPlan = {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Try to beat Monday's reps!",
+      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Try to beat Monday's reps!", goal: 20,
         steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders", goal: 15,
         steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface", goal: 20,
         steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus", goal: 15,
         steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
@@ -49,15 +49,15 @@ const workoutPlan = {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Push that time a little further today",
+      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Push that time a little further today", goal: 60,
         steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
-      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground",
+      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground", goal: 25,
         steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips, control the movement",
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips, control the movement", goal: 20,
         steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
-      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled",
+      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled", goal: 12,
         steps: ["Lie back, arms straight up, knees at 90°", "Lower opposite arm and leg toward the floor", "Return to start, switch sides and repeat"] },
-      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Add 5 sec vs Tuesday",
+      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Add 5 sec vs Tuesday", goal: 40,
         steps: ["High plank position, hips level with shoulders", "Drive one knee explosively toward your chest", "Switch legs rapidly, keep core braced throughout"] },
     ],
   },
@@ -65,13 +65,13 @@ const workoutPlan = {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 4, reps: "8–12", tip: "Extra set to finish the week strong",
+      { name: "Press-ups", sets: 4, reps: "8–12", tip: "Extra set to finish the week strong", goal: 20,
         steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders", goal: 15,
         steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface", goal: 20,
         steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus", goal: 15,
         steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
@@ -79,15 +79,15 @@ const workoutPlan = {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "30–45 sec", tip: "Push for a new personal best!",
+      { name: "Plank", sets: 3, reps: "30–45 sec", tip: "Push for a new personal best!", goal: 60,
         steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
-      { name: "Crunches", sets: 3, reps: "15–20", tip: "Lower back stays on ground",
+      { name: "Crunches", sets: 3, reps: "15–20", tip: "Lower back stays on ground", goal: 25,
         steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
-      { name: "Bicycle Crunch", sets: 2, reps: "15 each side", tip: "Twist fully, elbow to knee",
+      { name: "Bicycle Crunch", sets: 2, reps: "15 each side", tip: "Twist fully, elbow to knee", goal: 20,
         steps: ["Lie back, hands lightly behind head", "Bring left elbow toward right knee, extend left leg", "Alternate in a smooth, controlled cycling motion"] },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Controlled movement",
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Controlled movement", goal: 20,
         steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
-      { name: "Side Plank", sets: 2, reps: "20 sec each side", tip: "Body in straight line, don't let hips drop",
+      { name: "Side Plank", sets: 2, reps: "20 sec each side", tip: "Body in straight line, don't let hips drop", goal: 40,
         steps: ["Lie on side, forearm on floor, elbow under shoulder", "Lift hips until body forms a straight line", "Hold steady — don't let hips sag"] },
     ],
   },
@@ -95,13 +95,13 @@ const workoutPlan = {
     label: "Active Recovery",
     icon: "🚶",
     exercises: [
-      { name: "Brisk Walk", sets: 1, reps: "20–30 min", tip: "Get outside, fresh air helps recovery",
+      { name: "Brisk Walk", sets: 1, reps: "20–30 min", tip: "Get outside, fresh air helps recovery", goal: 30,
         steps: ["Stand tall, head up, shoulders relaxed", "Swing arms naturally with each stride", "Pace where you can talk, but not easily sing"] },
-      { name: "Chest Stretch", sets: 2, reps: "30 sec hold", tip: "Hands clasped behind back, open chest",
+      { name: "Chest Stretch", sets: 2, reps: "30 sec hold", tip: "Hands clasped behind back, open chest", goal: 45,
         steps: ["Stand tall, clasp hands behind your back", "Squeeze shoulder blades together and lift chest", "Hold and breathe deeply into the stretch"] },
-      { name: "Cat-Cow Stretch", sets: 2, reps: "10 slow reps", tip: "On hands and knees, arch and round your back",
+      { name: "Cat-Cow Stretch", sets: 2, reps: "10 slow reps", tip: "On hands and knees, arch and round your back", goal: 10,
         steps: ["On hands and knees, spine in neutral position", "Exhale: round back up, tuck chin to chest (Cat)", "Inhale: dip belly down, lift head and tailbone (Cow)"] },
-      { name: "Child's Pose", sets: 2, reps: "30 sec hold", tip: "Arms extended, breathe deeply into back",
+      { name: "Child's Pose", sets: 2, reps: "30 sec hold", tip: "Arms extended, breathe deeply into back", goal: 45,
         steps: ["Kneel and sit back toward your heels", "Extend arms forward on the floor", "Breathe deeply into your back and fully relax"] },
     ],
   },
@@ -408,7 +408,7 @@ export default function WorkoutApp() {
       }}>
         <div style={{ maxWidth: 480, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>
-            Daily Workout · v1.2
+            Daily Workout · v1.3
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: -0.5 }}>
             {workout.icon} {workout.label}
@@ -548,6 +548,43 @@ export default function WorkoutApp() {
                       ))}
                     </div>
                   )}
+                  {ex.goal && (() => {
+                    const target = parseTarget(ex.reps);
+                    const thisWeekValues = Array.from({ length: ex.sets }, (_, i) =>
+                      perfLog[`${activeDay}_${ei}_${i}`]
+                    ).filter(v => v != null);
+                    const avg = thisWeekValues.length > 0
+                      ? Math.round(thisWeekValues.reduce((a, b) => a + b, 0) / thisWeekValues.length)
+                      : null;
+                    const goalPct = avg != null ? Math.min(100, Math.round((avg / ex.goal) * 100)) : 0;
+                    const unitLabel = target.unit === 'sec' ? 's' : target.unit === 'min' ? 'm' : ' reps';
+                    const reached = avg != null && avg >= ex.goal;
+
+                    return (
+                      <div style={{ marginBottom: 12 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 5 }}>
+                          <span style={{ fontSize: 12, color: "#888" }}>
+                            🎯 Goal: <span style={{ color: "#f5a623", fontWeight: 700 }}>{ex.goal}{unitLabel}</span>
+                            <span style={{ fontSize: 11, color: "#555", marginLeft: 6 }}>fit & healthy at 56</span>
+                          </span>
+                          {avg != null && (
+                            <span style={{ fontSize: 12, color: reached ? "#4caf50" : "#aaa", fontWeight: reached ? 700 : 400 }}>
+                              {reached ? `✓ ${avg}${unitLabel}` : `${avg} / ${ex.goal}${unitLabel}`}
+                            </span>
+                          )}
+                        </div>
+                        {avg != null && (
+                          <div style={{ height: 4, borderRadius: 2, background: "rgba(255,255,255,0.08)" }}>
+                            <div style={{
+                              width: `${goalPct}%`, height: "100%", borderRadius: 2,
+                              background: reached ? "#4caf50" : "linear-gradient(90deg, #e94560, #f5a623)",
+                              transition: "width 0.4s ease",
+                            }} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                   {(() => {
                     const msg = getCoachMessage(ex, activeDay, ei, prevPerf, prevCompleted);
                     if (!msg) return null;

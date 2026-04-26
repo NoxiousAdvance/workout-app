@@ -78,10 +78,22 @@ const workoutPlan = {
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-function getWeekKey() {
+function getWeekKey(offset = 0) {
   const now = new Date();
-  const week = Math.floor(now.getTime() / (7 * 24 * 60 * 60 * 1000));
+  const week = Math.floor(now.getTime() / (7 * 24 * 60 * 60 * 1000)) + offset;
   return `week_${week}`;
+}
+
+// Returns { default: number, unit: 'reps'|'sec' } from a reps string like "8–12" or "20–30 sec"
+function parseTarget(reps) {
+  const secMatch = reps.match(/(\d+)[–-](\d+)\s*sec/);
+  if (secMatch) return { default: parseInt(secMatch[2]), unit: 'sec' };
+  const singleSec = reps.match(/(\d+)\s*sec/);
+  if (singleSec) return { default: parseInt(singleSec[1]), unit: 'sec' };
+  const rangeMatch = reps.match(/(\d+)[–-](\d+)/);
+  if (rangeMatch) return { default: parseInt(rangeMatch[2]), unit: 'reps' };
+  const singleMatch = reps.match(/(\d+)/);
+  return { default: singleMatch ? parseInt(singleMatch[1]) : 10, unit: 'reps' };
 }
 
 export default function WorkoutApp() {
@@ -92,17 +104,54 @@ export default function WorkoutApp() {
   const [expandedEx, setExpandedEx] = useState(null);
 
   const weekKey = getWeekKey();
+  const prevWeekKey = getWeekKey(-1);
+  const [perfLog, setPerfLog] = useState({});
+  const [prevCompleted, setPrevCompleted] = useState({});
+  const [prevPerf, setPrevPerf] = useState({});
+  const [activeSet, setActiveSet] = useState(null);
+  const [tab, setTab] = useState("workout");
 
   useEffect(() => {
     const saved = localStorage.getItem(weekKey);
     if (saved) setCompleted(JSON.parse(saved));
-  }, [weekKey]);
 
-  function toggleSet(day, exIdx, setIdx) {
+    const savedPerf = localStorage.getItem(`perf_${weekKey}`);
+    if (savedPerf) setPerfLog(JSON.parse(savedPerf));
+
+    const savedPrev = localStorage.getItem(prevWeekKey);
+    if (savedPrev) setPrevCompleted(JSON.parse(savedPrev));
+
+    const savedPrevPerf = localStorage.getItem(`perf_${prevWeekKey}`);
+    if (savedPrevPerf) setPrevPerf(JSON.parse(savedPrevPerf));
+  }, [weekKey, prevWeekKey]);
+
+  function openSetCounter(day, exIdx, setIdx) {
+    if (isSetDone(day, exIdx, setIdx)) {
+      const key = `${day}_${exIdx}_${setIdx}`;
+      const updatedDone = { ...completed, [key]: false };
+      setCompleted(updatedDone);
+      localStorage.setItem(weekKey, JSON.stringify(updatedDone));
+      const updatedPerf = { ...perfLog };
+      delete updatedPerf[key];
+      setPerfLog(updatedPerf);
+      localStorage.setItem(`perf_${weekKey}`, JSON.stringify(updatedPerf));
+    } else {
+      const ex = workoutPlan[day].exercises[exIdx];
+      const target = parseTarget(ex.reps);
+      setActiveSet({ day, exIdx, setIdx, value: target.default });
+    }
+  }
+
+  function confirmSet(repCount) {
+    const { day, exIdx, setIdx } = activeSet;
     const key = `${day}_${exIdx}_${setIdx}`;
-    const updated = { ...completed, [key]: !completed[key] };
-    setCompleted(updated);
-    localStorage.setItem(weekKey, JSON.stringify(updated));
+    const updatedDone = { ...completed, [key]: true };
+    setCompleted(updatedDone);
+    localStorage.setItem(weekKey, JSON.stringify(updatedDone));
+    const updatedPerf = { ...perfLog, [key]: repCount };
+    setPerfLog(updatedPerf);
+    localStorage.setItem(`perf_${weekKey}`, JSON.stringify(updatedPerf));
+    setActiveSet(null);
   }
 
   function isSetDone(day, exIdx, setIdx) {

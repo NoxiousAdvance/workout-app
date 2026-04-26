@@ -100,6 +100,39 @@ function parseTarget(reps) {
   return { default: singleMatch ? parseInt(singleMatch[1]) : 10, unit: 'reps' };
 }
 
+function getCoachMessage(ex, day, exIdx, prevPerf, prevCompleted) {
+  const completedSets = Array.from({ length: ex.sets }, (_, i) =>
+    prevCompleted?.[`${day}_${exIdx}_${i}`]
+  ).filter(Boolean).length;
+
+  if (completedSets === 0) return null;
+
+  const loggedValues = Array.from({ length: ex.sets }, (_, i) =>
+    prevPerf?.[`${day}_${exIdx}_${i}`]
+  ).filter(v => v != null);
+
+  if (loggedValues.length > 0) {
+    const avg = Math.round(loggedValues.reduce((a, b) => a + b, 0) / loggedValues.length);
+    const rangeMatch = ex.reps.match(/(\d+)[–-](\d+)/);
+    const target = parseTarget(ex.reps);
+
+    if (rangeMatch && target.unit === 'reps') {
+      const [, min, max] = rangeMatch.map(Number);
+      if (avg >= max) return { text: `You averaged ${avg} reps last week — push past ${max} today!`, level: 'push' };
+      if (avg < min) return { text: `You averaged ${avg} reps last week. Focus on form, aim for ${min}+.`, level: 'form' };
+      return { text: `You averaged ${avg} reps last week. Work towards ${max} today.`, level: 'improve' };
+    }
+    if (target.unit === 'sec') {
+      return { text: `You held ${avg}s last week. Add a few more seconds today.`, level: 'improve' };
+    }
+  }
+
+  if (completedSets < ex.sets) {
+    return { text: `You hit ${completedSets}/${ex.sets} sets last week. Aim for all ${ex.sets} today.`, level: 'form' };
+  }
+  return { text: `You completed all sets last week — keep the momentum!`, level: 'improve' };
+}
+
 export default function WorkoutApp() {
   const today = new Date().toLocaleDateString("en-NZ", { weekday: "short" }).slice(0, 3);
   const todayDay = days.includes(today) ? today : "Mon";
@@ -314,6 +347,20 @@ export default function WorkoutApp() {
                   }}>
                     💡 {ex.tip}
                   </div>
+                  {(() => {
+                    const msg = getCoachMessage(ex, activeDay, ei, prevPerf, prevCompleted);
+                    if (!msg) return null;
+                    const colors = { push: '#f5a623', form: '#e94560', improve: '#4caf50' };
+                    return (
+                      <div style={{
+                        background: "rgba(255,255,255,0.04)", border: `1px solid ${colors[msg.level]}40`,
+                        borderLeft: `3px solid ${colors[msg.level]}`,
+                        borderRadius: 8, padding: "8px 12px", fontSize: 13, color: "#ccc", marginBottom: 12,
+                      }}>
+                        🏋️ {msg.text}
+                      </div>
+                    );
+                  })()}
                   {!isRecovery && (
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                       {Array.from({ length: ex.sets }, (_, si) => {

@@ -84,12 +84,16 @@ function getWeekKey(offset = 0) {
   return `week_${week}`;
 }
 
-// Returns { default: number, unit: 'reps'|'sec' } from a reps string like "8–12" or "20–30 sec"
+// Returns { default: number, unit: 'reps'|'sec'|'min' } from a reps string like "8–12" or "20–30 sec"
 function parseTarget(reps) {
   const secMatch = reps.match(/(\d+)[–-](\d+)\s*sec/);
   if (secMatch) return { default: parseInt(secMatch[2]), unit: 'sec' };
   const singleSec = reps.match(/(\d+)\s*sec/);
   if (singleSec) return { default: parseInt(singleSec[1]), unit: 'sec' };
+  const minMatch = reps.match(/(\d+)[–-](\d+)\s*min/);
+  if (minMatch) return { default: parseInt(minMatch[2]), unit: 'min' };
+  const singleMin = reps.match(/(\d+)\s*min/);
+  if (singleMin) return { default: parseInt(singleMin[1]), unit: 'min' };
   const rangeMatch = reps.match(/(\d+)[–-](\d+)/);
   if (rangeMatch) return { default: parseInt(rangeMatch[2]), unit: 'reps' };
   const singleMatch = reps.match(/(\d+)/);
@@ -143,6 +147,7 @@ export default function WorkoutApp() {
   }
 
   function confirmSet(repCount) {
+    if (!activeSet) return;
     const { day, exIdx, setIdx } = activeSet;
     const key = `${day}_${exIdx}_${setIdx}`;
     const updatedDone = { ...completed, [key]: true };

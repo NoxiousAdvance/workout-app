@@ -558,7 +558,10 @@ export default function WorkoutApp() {
                       : null;
                     const goalPct = avg != null ? Math.min(100, Math.round((avg / ex.goal) * 100)) : 0;
                     const unitLabel = target.unit === 'sec' ? 's' : target.unit === 'min' ? 'm' : ' reps';
-                    const reached = avg != null && avg >= ex.goal;
+                    const goalColor = avg == null ? null
+                      : avg > ex.goal ? "#4caf50"
+                      : avg === ex.goal ? "#f5a623"
+                      : "#e94560";
 
                     return (
                       <div style={{ marginBottom: 12 }}>
@@ -568,8 +571,8 @@ export default function WorkoutApp() {
                             <span style={{ fontSize: 11, color: "#555", marginLeft: 6 }}>fit & healthy at 56</span>
                           </span>
                           {avg != null && (
-                            <span style={{ fontSize: 12, color: reached ? "#4caf50" : "#aaa", fontWeight: reached ? 700 : 400 }}>
-                              {reached ? `✓ ${avg}${unitLabel}` : `${avg} / ${ex.goal}${unitLabel}`}
+                            <span style={{ fontSize: 12, color: goalColor, fontWeight: 700 }}>
+                              {avg > ex.goal ? `✓ ${avg}${unitLabel}` : `${avg} / ${ex.goal}${unitLabel}`}
                             </span>
                           )}
                         </div>
@@ -577,7 +580,7 @@ export default function WorkoutApp() {
                           <div style={{ height: 4, borderRadius: 2, background: "rgba(255,255,255,0.08)" }}>
                             <div style={{
                               width: `${goalPct}%`, height: "100%", borderRadius: 2,
-                              background: reached ? "#4caf50" : "linear-gradient(90deg, #e94560, #f5a623)",
+                              background: goalColor,
                               transition: "width 0.4s ease",
                             }} />
                           </div>

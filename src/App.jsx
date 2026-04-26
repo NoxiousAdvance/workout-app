@@ -216,13 +216,144 @@ export default function WorkoutApp() {
   const { done: dayDone, total: dayTotal } = dayProgress(activeDay);
   const isRecovery = activeDay === "Sun";
 
+  function getWeeklyStats() {
+    return [-3, -2, -1, 0].map(offset => {
+      const wk = getWeekKey(offset);
+      const comp = offset === 0 ? completed
+        : offset === -1 ? prevCompleted
+        : JSON.parse(localStorage.getItem(wk) || '{}');
+      let done = 0, total = 0;
+      days.forEach(d => {
+        workoutPlan[d].exercises.forEach((ex, ei) => {
+          for (let s = 0; s < ex.sets; s++) {
+            total++;
+            if (comp[`${d}_${ei}_${s}`]) done++;
+          }
+        });
+      });
+      return { offset, pct: total ? Math.round((done / total) * 100) : 0 };
+    });
+  }
+
+  function getStreak() {
+    let streak = 0;
+    for (let i = 0; i >= -52; i--) {
+      const wk = getWeekKey(i);
+      const comp = i === 0 ? completed : i === -1 ? prevCompleted : JSON.parse(localStorage.getItem(wk) || '{}');
+      if (Object.values(comp).some(Boolean)) streak++;
+      else if (i < 0) break;
+    }
+    return streak;
+  }
+
+  const bottomNav = (
+    <div style={{
+      position: "fixed", bottom: 0, left: 0, right: 0,
+      background: "#111118", borderTop: "1px solid rgba(255,255,255,0.08)",
+      display: "flex", zIndex: 100,
+    }}>
+      {[["workout", "💪", "Workout"], ["progress", "📈", "Progress"]].map(([t, icon, label]) => (
+        <button key={t} onClick={() => setTab(t)} style={{
+          flex: 1, padding: "10px 0 14px", background: "none", border: "none",
+          color: tab === t ? "#e94560" : "#555", cursor: "pointer",
+          fontSize: 11, fontWeight: tab === t ? 700 : 400,
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+        }}>
+          <span style={{ fontSize: 20 }}>{icon}</span>
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+
+  if (tab === "progress") {
+    const weeklyStats = getWeeklyStats();
+    const streak = getStreak();
+    const weekLabels = ["3 wks ago", "2 wks ago", "Last week", "This week"];
+
+    const coachItems = [];
+    days.filter(d => d !== "Sun").forEach(d => {
+      workoutPlan[d].exercises.forEach((ex, ei) => {
+        const msg = getCoachMessage(ex, d, ei, prevPerf, prevCompleted);
+        if (msg) coachItems.push({ ex, d, ei, msg });
+      });
+    });
+
+    return (
+      <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#f0f0f0", fontFamily: "'DM Sans', 'Segoe UI', sans-serif", padding: "0 0 80px 0" }}>
+        <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", padding: "28px 20px 20px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ maxWidth: 480, margin: "0 auto" }}>
+            <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>Your Stats</div>
+            <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0 }}>📈 Progress</h1>
+          </div>
+        </div>
+
+        <div style={{ maxWidth: 480, margin: "0 auto", padding: 16 }}>
+          {/* Streak */}
+          <div style={{ background: "rgba(233,69,96,0.08)", border: "1px solid rgba(233,69,96,0.2)", borderRadius: 14, padding: 16, marginBottom: 16, textAlign: "center" }}>
+            <div style={{ fontSize: 36 }}>🔥</div>
+            <div style={{ fontSize: 36, fontWeight: 800, color: "#e94560" }}>{streak}</div>
+            <div style={{ color: "#aaa", fontSize: 13, marginTop: 2 }}>week{streak !== 1 ? "s" : ""} active</div>
+          </div>
+
+          {/* Weekly bars */}
+          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: 16, marginBottom: 16 }}>
+            <div style={{ fontSize: 11, letterSpacing: 2, color: "#666", textTransform: "uppercase", marginBottom: 12 }}>Weekly Completion</div>
+            {weeklyStats.map((s, i) => (
+              <div key={i} style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#888", marginBottom: 4 }}>
+                  <span style={{ color: i === 3 ? "#e94560" : "#666" }}>{weekLabels[i]}</span>
+                  <span>{s.pct > 0 ? `${s.pct}%` : "—"}</span>
+                </div>
+                <div style={{ height: 8, borderRadius: 4, background: "rgba(255,255,255,0.08)" }}>
+                  <div style={{
+                    width: `${s.pct}%`, height: "100%", borderRadius: 4,
+                    background: s.pct === 100 ? "#4caf50" : i === 3 ? "linear-gradient(90deg, #e94560, #f5a623)" : "rgba(233,69,96,0.4)",
+                    transition: "width 0.6s ease",
+                  }} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Coach tips */}
+          <div style={{ fontSize: 11, letterSpacing: 2, color: "#666", textTransform: "uppercase", marginBottom: 10 }}>
+            Coaching
+          </div>
+          {coachItems.length === 0 ? (
+            <div style={{ textAlign: "center", color: "#444", fontSize: 13, padding: "20px 0" }}>
+              Complete workouts to unlock coaching insights.
+            </div>
+          ) : (
+            coachItems.map(({ ex, d, msg }, i) => {
+              const colors = { push: '#f5a623', form: '#e94560', improve: '#4caf50' };
+              return (
+                <div key={i} style={{
+                  background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                  borderLeft: `3px solid ${colors[msg.level]}`,
+                  borderRadius: 10, padding: "10px 14px", marginBottom: 8,
+                }}>
+                  <div style={{ fontWeight: 700, fontSize: 13 }}>
+                    {ex.name} <span style={{ color: "#555", fontWeight: 400, fontSize: 12 }}>{d}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "#aaa", marginTop: 3 }}>{msg.text}</div>
+                </div>
+              );
+            })
+          )}
+        </div>
+        {bottomNav}
+      </div>
+    );
+  }
+
   return (
     <div style={{
       minHeight: "100vh",
       background: "#0a0a0f",
       fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
       color: "#f0f0f0",
-      padding: "0 0 80px 0",
+      padding: "0 0 90px 0",
     }}>
       <div style={{
         background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
@@ -476,6 +607,7 @@ export default function WorkoutApp() {
           })}
         </div>
       </div>
+      {bottomNav}
     </div>
   );
 }

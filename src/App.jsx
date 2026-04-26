@@ -362,7 +362,7 @@ export default function WorkoutApp() {
       }}>
         <div style={{ maxWidth: 480, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>
-            Daily Workout
+            Daily Workout · v1.1
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: -0.5 }}>
             {workout.icon} {workout.label}

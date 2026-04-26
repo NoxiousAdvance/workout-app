@@ -204,7 +204,7 @@ export default function WorkoutApp() {
     if (!ex.steps?.length) return;
     const timer = setInterval(() => {
       setActiveStepIdx(i => (i + 1) % ex.steps.length);
-    }, 2500);
+    }, 5000);
     return () => clearInterval(timer);
   }, [expandedEx, activeDay]);
 

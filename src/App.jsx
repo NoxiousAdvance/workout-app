@@ -325,10 +325,10 @@ export default function WorkoutApp() {
               Complete workouts to unlock coaching insights.
             </div>
           ) : (
-            coachItems.map(({ ex, d, msg }, i) => {
+            coachItems.map(({ ex, d, ei, msg }) => {
               const colors = { push: '#f5a623', form: '#e94560', improve: '#4caf50' };
               return (
-                <div key={i} style={{
+                <div key={`${d}_${ei}`} style={{
                   background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
                   borderLeft: `3px solid ${colors[msg.level]}`,
                   borderRadius: 10, padding: "10px 14px", marginBottom: 8,

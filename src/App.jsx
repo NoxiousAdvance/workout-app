@@ -318,15 +318,44 @@ export default function WorkoutApp() {
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                       {Array.from({ length: ex.sets }, (_, si) => {
                         const done = isSetDone(activeDay, ei, si);
+                        const isCounterOpen = activeSet?.day === activeDay && activeSet?.exIdx === ei && activeSet?.setIdx === si;
+                        const logged = perfLog[`${activeDay}_${ei}_${si}`];
+                        const target = parseTarget(ex.reps);
+
+                        if (isCounterOpen) {
+                          return (
+                            <div key={si} style={{
+                              display: "flex", alignItems: "center", gap: 6,
+                              background: "rgba(233,69,96,0.1)", border: "1px solid rgba(233,69,96,0.3)",
+                              borderRadius: 8, padding: "6px 10px",
+                            }}>
+                              <span style={{ fontSize: 11, color: "#aaa" }}>Set {si + 1}</span>
+                              <button onClick={() => setActiveSet(s => ({ ...s, value: Math.max(1, s.value - 1) }))}
+                                style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)", color: "#fff", cursor: "pointer", fontSize: 16 }}>−</button>
+                              <span style={{ width: 32, textAlign: "center", fontWeight: 700, fontSize: 15 }}>{activeSet.value}</span>
+                              <button onClick={() => setActiveSet(s => ({ ...s, value: s.value + 1 }))}
+                                style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)", color: "#fff", cursor: "pointer", fontSize: 16 }}>+</button>
+                              <span style={{ fontSize: 11, color: "#888" }}>{target.unit}</span>
+                              <button onClick={() => confirmSet(activeSet.value)}
+                                style={{ padding: "4px 10px", borderRadius: 6, border: "none", background: "#4caf50", color: "#fff", cursor: "pointer", fontWeight: 700, fontSize: 13 }}>✓</button>
+                              <button onClick={() => setActiveSet(null)}
+                                style={{ padding: "4px 8px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.15)", background: "none", color: "#888", cursor: "pointer", fontSize: 13 }}>✕</button>
+                            </div>
+                          );
+                        }
+
                         return (
-                          <button key={si} onClick={() => toggleSet(activeDay, ei, si)} style={{
-                            padding: "8px 16px", borderRadius: 8,
-                            border: done ? "2px solid #4caf50" : "2px solid rgba(255,255,255,0.2)",
-                            background: done ? "rgba(76,175,80,0.2)" : "rgba(255,255,255,0.05)",
-                            color: done ? "#4caf50" : "#aaa",
-                            cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.2s",
-                          }}>
-                            {done ? "✓ " : ""}Set {si + 1}
+                          <button key={si} onClick={() => openSetCounter(activeDay, ei, si)}
+                            style={{
+                              padding: "8px 16px", borderRadius: 8,
+                              border: done ? "2px solid #4caf50" : "2px solid rgba(255,255,255,0.2)",
+                              background: done ? "rgba(76,175,80,0.2)" : "rgba(255,255,255,0.05)",
+                              color: done ? "#4caf50" : "#aaa",
+                              cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.2s",
+                            }}>
+                            {done
+                              ? `✓ ${logged != null ? logged + (target.unit === 'sec' ? 's' : target.unit === 'min' ? 'm' : '') : 'done'}`
+                              : `Set ${si + 1}`}
                           </button>
                         );
                       })}
@@ -336,14 +365,18 @@ export default function WorkoutApp() {
                     <div style={{ display: "flex", gap: 8 }}>
                       {(() => {
                         const done = isSetDone(activeDay, ei, 0);
+                        const isCounterOpen = activeSet?.day === activeDay && activeSet?.exIdx === ei && activeSet?.setIdx === 0;
+                        if (isCounterOpen) {
+                          return (
+                            <button onClick={() => confirmSet(1)}
+                              style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid #4caf50", background: "rgba(76,175,80,0.2)", color: "#4caf50", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>
+                              ✓ Mark done
+                            </button>
+                          );
+                        }
                         return (
-                          <button onClick={() => toggleSet(activeDay, ei, 0)} style={{
-                            padding: "8px 20px", borderRadius: 8,
-                            border: done ? "2px solid #4caf50" : "2px solid rgba(255,255,255,0.2)",
-                            background: done ? "rgba(76,175,80,0.2)" : "rgba(255,255,255,0.05)",
-                            color: done ? "#4caf50" : "#aaa",
-                            cursor: "pointer", fontSize: 13, fontWeight: 600,
-                          }}>
+                          <button onClick={() => openSetCounter(activeDay, ei, 0)}
+                            style={{ padding: "8px 20px", borderRadius: 8, border: done ? "2px solid #4caf50" : "2px solid rgba(255,255,255,0.2)", background: done ? "rgba(76,175,80,0.2)" : "rgba(255,255,255,0.05)", color: done ? "#4caf50" : "#aaa", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>
                             {done ? "✓ Done" : "Mark done"}
                           </button>
                         );

@@ -5,73 +5,104 @@ const workoutPlan = {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Keep body straight, elbows at 45°" },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders" },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface" },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus" },
+      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Keep body straight, elbows at 45°",
+        steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+        steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+        steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+        steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
   Tue: {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Straight line head to heels, squeeze glutes" },
-      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground, don't pull neck" },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips off floor, control the movement" },
-      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled, lower back flat" },
-      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Keep hips level, drive knees to chest" },
+      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Straight line head to heels, squeeze glutes",
+        steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
+      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground, don't pull neck",
+        steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips off floor, control the movement",
+        steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
+      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled, lower back flat",
+        steps: ["Lie back, arms straight up, knees at 90°", "Lower opposite arm and leg toward the floor", "Return to start, switch sides and repeat"] },
+      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Keep hips level, drive knees to chest",
+        steps: ["High plank position, hips level with shoulders", "Drive one knee explosively toward your chest", "Switch legs rapidly, keep core braced throughout"] },
     ],
   },
   Wed: {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Try to beat Monday's reps!" },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders" },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface" },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus" },
+      { name: "Press-ups", sets: 3, reps: "8–12", tip: "Try to beat Monday's reps!",
+        steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+        steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+        steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+        steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
   Thu: {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Push that time a little further today" },
-      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground" },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips, control the movement" },
-      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled" },
-      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Add 5 sec vs Tuesday" },
+      { name: "Plank", sets: 3, reps: "20–30 sec", tip: "Push that time a little further today",
+        steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
+      { name: "Crunches", sets: 3, reps: "15", tip: "Lower back stays on ground",
+        steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Lift hips, control the movement",
+        steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
+      { name: "Dead Bug", sets: 3, reps: "8 each side", tip: "Slow and controlled",
+        steps: ["Lie back, arms straight up, knees at 90°", "Lower opposite arm and leg toward the floor", "Return to start, switch sides and repeat"] },
+      { name: "Mountain Climbers", sets: 2, reps: "20 sec", tip: "Add 5 sec vs Tuesday",
+        steps: ["High plank position, hips level with shoulders", "Drive one knee explosively toward your chest", "Switch legs rapidly, keep core braced throughout"] },
     ],
   },
   Fri: {
     label: "Chest & Shoulders",
     icon: "💪",
     exercises: [
-      { name: "Press-ups", sets: 4, reps: "8–12", tip: "Extra set to finish the week strong" },
-      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders" },
-      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface" },
-      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus" },
+      { name: "Press-ups", sets: 4, reps: "8–12", tip: "Extra set to finish the week strong",
+        steps: ["Start in high plank, hands shoulder-width apart", "Lower chest toward floor, elbows at 45°", "Push back up explosively, arms fully extended"] },
+      { name: "Pike Press-ups", sets: 3, reps: "8–10", tip: "Hips high, targets shoulders",
+        steps: ["Form an inverted V with hips high in the air", "Bend elbows, lower crown toward the floor", "Press back up, keeping hips elevated throughout"] },
+      { name: "Incline Press-ups", sets: 2, reps: "10–12", tip: "Hands on elevated surface",
+        steps: ["Hands on elevated surface, body in a straight line", "Lower chest to the surface, elbows at 45°", "Push back up through palms, fully extend arms"] },
+      { name: "Decline Press-ups", sets: 2, reps: "8–10", tip: "Feet elevated, upper chest focus",
+        steps: ["Feet on elevated surface, hands on floor shoulder-width", "Lower chest toward floor with control", "Press up, feel the upper chest engage"] },
     ],
   },
   Sat: {
     label: "Abs & Core",
     icon: "🔥",
     exercises: [
-      { name: "Plank", sets: 3, reps: "30–45 sec", tip: "Push for a new personal best!" },
-      { name: "Crunches", sets: 3, reps: "15–20", tip: "Lower back stays on ground" },
-      { name: "Bicycle Crunch", sets: 2, reps: "15 each side", tip: "Twist fully, elbow to knee" },
-      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Controlled movement" },
-      { name: "Side Plank", sets: 2, reps: "20 sec each side", tip: "Body in straight line, don't let hips drop" },
+      { name: "Plank", sets: 3, reps: "30–45 sec", tip: "Push for a new personal best!",
+        steps: ["Forearms flat, elbows directly under shoulders", "Lift into a straight line from head to heels", "Squeeze glutes and abs — breathe steadily"] },
+      { name: "Crunches", sets: 3, reps: "15–20", tip: "Lower back stays on ground",
+        steps: ["Lie back, knees bent, fingertips lightly at temples", "Curl shoulders off the floor as you exhale", "Lower slowly, keep lower back pressed to ground"] },
+      { name: "Bicycle Crunch", sets: 2, reps: "15 each side", tip: "Twist fully, elbow to knee",
+        steps: ["Lie back, hands lightly behind head", "Bring left elbow toward right knee, extend left leg", "Alternate in a smooth, controlled cycling motion"] },
+      { name: "Reverse Crunch", sets: 3, reps: "12", tip: "Controlled movement",
+        steps: ["Lie back, arms at sides for stability", "Draw knees to chest, curl hips off the floor", "Lower with control — don't let legs swing"] },
+      { name: "Side Plank", sets: 2, reps: "20 sec each side", tip: "Body in straight line, don't let hips drop",
+        steps: ["Lie on side, forearm on floor, elbow under shoulder", "Lift hips until body forms a straight line", "Hold steady — don't let hips sag"] },
     ],
   },
   Sun: {
     label: "Active Recovery",
     icon: "🚶",
     exercises: [
-      { name: "Brisk Walk", sets: 1, reps: "20–30 min", tip: "Get outside, fresh air helps recovery" },
-      { name: "Chest Stretch", sets: 2, reps: "30 sec hold", tip: "Hands clasped behind back, open chest" },
-      { name: "Cat-Cow Stretch", sets: 2, reps: "10 slow reps", tip: "On hands and knees, arch and round your back" },
-      { name: "Child's Pose", sets: 2, reps: "30 sec hold", tip: "Arms extended, breathe deeply into back" },
+      { name: "Brisk Walk", sets: 1, reps: "20–30 min", tip: "Get outside, fresh air helps recovery",
+        steps: ["Stand tall, head up, shoulders relaxed", "Swing arms naturally with each stride", "Pace where you can talk, but not easily sing"] },
+      { name: "Chest Stretch", sets: 2, reps: "30 sec hold", tip: "Hands clasped behind back, open chest",
+        steps: ["Stand tall, clasp hands behind your back", "Squeeze shoulder blades together and lift chest", "Hold and breathe deeply into the stretch"] },
+      { name: "Cat-Cow Stretch", sets: 2, reps: "10 slow reps", tip: "On hands and knees, arch and round your back",
+        steps: ["On hands and knees, spine in neutral position", "Exhale: round back up, tuck chin to chest (Cat)", "Inhale: dip belly down, lift head and tailbone (Cow)"] },
+      { name: "Child's Pose", sets: 2, reps: "30 sec hold", tip: "Arms extended, breathe deeply into back",
+        steps: ["Kneel and sit back toward your heels", "Extend arms forward on the floor", "Breathe deeply into your back and fully relax"] },
     ],
   },
 };
@@ -147,6 +178,7 @@ export default function WorkoutApp() {
   const [prevPerf, setPrevPerf] = useState({});
   const [activeSet, setActiveSet] = useState(null);
   const [tab, setTab] = useState("workout");
+  const [activeStepIdx, setActiveStepIdx] = useState(0);
 
   useEffect(() => {
     const saved = localStorage.getItem(weekKey);
@@ -161,6 +193,20 @@ export default function WorkoutApp() {
     const savedPrevPerf = localStorage.getItem(`perf_${prevWeekKey}`);
     if (savedPrevPerf) setPrevPerf(JSON.parse(savedPrevPerf));
   }, [weekKey, prevWeekKey]);
+
+  useEffect(() => {
+    setActiveStepIdx(0);
+  }, [expandedEx]);
+
+  useEffect(() => {
+    if (expandedEx === null) return;
+    const ex = workoutPlan[activeDay].exercises[expandedEx];
+    if (!ex.steps?.length) return;
+    const timer = setInterval(() => {
+      setActiveStepIdx(i => (i + 1) % ex.steps.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, [expandedEx, activeDay]);
 
   function openSetCounter(day, exIdx, setIdx) {
     if (isSetDone(day, exIdx, setIdx)) {
@@ -362,7 +408,7 @@ export default function WorkoutApp() {
       }}>
         <div style={{ maxWidth: 480, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>
-            Daily Workout · v1.1
+            Daily Workout · v1.2
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: -0.5 }}>
             {workout.icon} {workout.label}
@@ -478,6 +524,30 @@ export default function WorkoutApp() {
                   }}>
                     💡 {ex.tip}
                   </div>
+                  {ex.steps && (
+                    <div style={{ marginBottom: 12 }}>
+                      {ex.steps.map((step, si) => (
+                        <div key={si} style={{
+                          display: "flex", gap: 10, alignItems: "flex-start", padding: "5px 0",
+                          opacity: si === activeStepIdx ? 1 : 0.35,
+                          transition: "opacity 0.5s ease",
+                        }}>
+                          <div style={{
+                            width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
+                            background: si === activeStepIdx ? "#e94560" : "rgba(255,255,255,0.08)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: 11, fontWeight: 700,
+                            color: si === activeStepIdx ? "#fff" : "#555",
+                            transition: "all 0.5s ease",
+                          }}>{si + 1}</div>
+                          <span style={{ fontSize: 13, paddingTop: 3, transition: "color 0.5s ease",
+                            color: si === activeStepIdx ? "#f0f0f0" : "#555" }}>
+                            {step}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {(() => {
                     const msg = getCoachMessage(ex, activeDay, ei, prevPerf, prevCompleted);
                     if (!msg) return null;

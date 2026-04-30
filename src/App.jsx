@@ -199,17 +199,39 @@ export default function WorkoutApp() {
         if (!data) return;
         const week = data[weekKey];
         if (week) {
-          if (week.completed) { setCompleted(week.completed); localStorage.setItem(weekKey, JSON.stringify(week.completed)); }
-          if (week.perfLog) { setPerfLog(week.perfLog); localStorage.setItem(`perf_${weekKey}`, JSON.stringify(week.perfLog)); }
+          if (week.completed) {
+            const local = JSON.parse(localStorage.getItem(weekKey) || '{}');
+            const merged = { ...week.completed, ...local };
+            setCompleted(merged);
+            localStorage.setItem(weekKey, JSON.stringify(merged));
+          }
+          if (week.perfLog) {
+            const localPerf = JSON.parse(localStorage.getItem(`perf_${weekKey}`) || '{}');
+            const mergedPerf = { ...week.perfLog, ...localPerf };
+            setPerfLog(mergedPerf);
+            localStorage.setItem(`perf_${weekKey}`, JSON.stringify(mergedPerf));
+          }
         }
         const prev = data[prevWeekKey];
         if (prev) {
-          if (prev.completed) { setPrevCompleted(prev.completed); localStorage.setItem(prevWeekKey, JSON.stringify(prev.completed)); }
-          if (prev.perfLog) { setPrevPerf(prev.perfLog); localStorage.setItem(`perf_${prevWeekKey}`, JSON.stringify(prev.perfLog)); }
+          if (prev.completed) {
+            const localPrev = JSON.parse(localStorage.getItem(prevWeekKey) || '{}');
+            const mergedPrev = { ...prev.completed, ...localPrev };
+            setPrevCompleted(mergedPrev);
+            localStorage.setItem(prevWeekKey, JSON.stringify(mergedPrev));
+          }
+          if (prev.perfLog) {
+            const localPrevPerf = JSON.parse(localStorage.getItem(`perf_${prevWeekKey}`) || '{}');
+            const mergedPrevPerf = { ...prev.perfLog, ...localPrevPerf };
+            setPrevPerf(mergedPrevPerf);
+            localStorage.setItem(`perf_${prevWeekKey}`, JSON.stringify(mergedPrevPerf));
+          }
         }
       });
     }
-  }, [weekKey, prevWeekKey, token]); // eslint-disable-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // loadFromGitHub is stable (useCallback); omitted to prevent double-load on token changes
+  }, [weekKey, prevWeekKey, token]);
 
   useEffect(() => {
     setActiveStepIdx(0);

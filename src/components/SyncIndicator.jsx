@@ -15,7 +15,7 @@ export function SyncIndicator({ state, onRetry }) {
   if (state === 'error') return (
     <span>
       {dot('#e94560')}
-      <button onClick={onRetry} style={{
+      <button onClick={onRetry ?? undefined} style={{
         fontSize: 11, color: '#e94560', background: 'none',
         border: 'none', cursor: 'pointer', marginLeft: 4, verticalAlign: 'middle',
       }}>

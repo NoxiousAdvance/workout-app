@@ -5,7 +5,10 @@
 // Deploy: https://dash.cloudflare.com → Workers → Create → Paste this file
 // Or: npx wrangler deploy
 
-const GITHUB_DEVICE_BASE = 'https://github.com/login/device';
+const GITHUB_ROUTES = {
+  '/code':  'https://github.com/login/device/code',
+  '/token': 'https://github.com/login/oauth/access_token',
+};
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -25,10 +28,11 @@ export default {
       return new Response('Not found', { status: 404, headers: CORS });
     }
 
-    const upstream = await fetch(`${GITHUB_DEVICE_BASE}${pathname}`, {
+    const bodyText = await request.text();
+    const upstream = await fetch(GITHUB_ROUTES[pathname], {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: request.body,
+      body: bodyText,
     });
 
     const body = await upstream.text();

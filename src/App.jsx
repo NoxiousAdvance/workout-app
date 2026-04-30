@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useGitHubSync } from "./hooks/useGitHubSync";
+import { GitHubConnect } from "./components/GitHubConnect";
+import { SyncIndicator } from "./components/SyncIndicator";
 
 const workoutPlan = {
   Mon: {
@@ -178,21 +181,35 @@ export default function WorkoutApp() {
   const [prevPerf, setPrevPerf] = useState({});
   const [activeSet, setActiveSet] = useState(null);
   const [tab, setTab] = useState("workout");
+  const { token, setToken, syncState, loadFromGitHub, sync, retry } = useGitHubSync();
   const [activeStepIdx, setActiveStepIdx] = useState(0);
 
   useEffect(() => {
     const saved = localStorage.getItem(weekKey);
     if (saved) setCompleted(JSON.parse(saved));
-
     const savedPerf = localStorage.getItem(`perf_${weekKey}`);
     if (savedPerf) setPerfLog(JSON.parse(savedPerf));
-
     const savedPrev = localStorage.getItem(prevWeekKey);
     if (savedPrev) setPrevCompleted(JSON.parse(savedPrev));
-
     const savedPrevPerf = localStorage.getItem(`perf_${prevWeekKey}`);
     if (savedPrevPerf) setPrevPerf(JSON.parse(savedPrevPerf));
-  }, [weekKey, prevWeekKey]);
+
+    if (token) {
+      loadFromGitHub(token).then(data => {
+        if (!data) return;
+        const week = data[weekKey];
+        if (week) {
+          if (week.completed) { setCompleted(week.completed); localStorage.setItem(weekKey, JSON.stringify(week.completed)); }
+          if (week.perfLog) { setPerfLog(week.perfLog); localStorage.setItem(`perf_${weekKey}`, JSON.stringify(week.perfLog)); }
+        }
+        const prev = data[prevWeekKey];
+        if (prev) {
+          if (prev.completed) { setPrevCompleted(prev.completed); localStorage.setItem(prevWeekKey, JSON.stringify(prev.completed)); }
+          if (prev.perfLog) { setPrevPerf(prev.perfLog); localStorage.setItem(`perf_${prevWeekKey}`, JSON.stringify(prev.perfLog)); }
+        }
+      });
+    }
+  }, [weekKey, prevWeekKey, token]); // eslint-disable-line
 
   useEffect(() => {
     setActiveStepIdx(0);
@@ -235,6 +252,7 @@ export default function WorkoutApp() {
     const updatedPerf = { ...perfLog, [key]: repCount };
     setPerfLog(updatedPerf);
     localStorage.setItem(`perf_${weekKey}`, JSON.stringify(updatedPerf));
+    sync(weekKey, updatedDone, updatedPerf);
     setActiveSet(null);
   }
 
@@ -330,7 +348,10 @@ export default function WorkoutApp() {
         <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", padding: "28px 20px 20px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <div style={{ maxWidth: 480, margin: "0 auto" }}>
             <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>Your Stats</div>
-            <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0 }}>📈 Progress</h1>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0 }}>📈 Progress</h1>
+              <SyncIndicator state={syncState} onRetry={retry} />
+            </div>
           </div>
         </div>
 
@@ -410,9 +431,12 @@ export default function WorkoutApp() {
           <div style={{ fontSize: 11, letterSpacing: 3, color: "#e94560", textTransform: "uppercase", marginBottom: 4 }}>
             Daily Workout · v1.4
           </div>
-          <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: -0.5 }}>
-            {workout.icon} {workout.label}
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: -0.5 }}>
+              {workout.icon} {workout.label}
+            </h1>
+            <SyncIndicator state={syncState} onRetry={retry} />
+          </div>
           {!isRecovery && (
             <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ flex: 1, height: 6, borderRadius: 3, background: "rgba(255,255,255,0.1)", overflow: "hidden" }}>
@@ -475,6 +499,9 @@ export default function WorkoutApp() {
       </div>
 
       <div style={{ maxWidth: 480, margin: "0 auto", padding: "16px" }}>
+        {!token && (
+          <GitHubConnect onToken={setToken} />
+        )}
         {workout.exercises.map((ex, ei) => {
           const doneSets = exerciseDoneCount(activeDay, ei, ex.sets);
           const allDone = doneSets === ex.sets;

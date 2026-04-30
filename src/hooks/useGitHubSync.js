@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 const REPO = 'NoxiousAdvance/workout-app';
 const FILE_PATH = 'data/progress.json';
@@ -6,11 +6,14 @@ const TOKEN_KEY = 'gh_token';
 const API = 'https://api.github.com';
 
 function encodeContent(obj) {
-  return btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2))));
+  const bytes = new TextEncoder().encode(JSON.stringify(obj, null, 2));
+  return btoa(bytes.reduce((acc, byte) => acc + String.fromCharCode(byte), ''));
 }
 
 function decodeContent(b64) {
-  return JSON.parse(decodeURIComponent(escape(atob(b64.replace(/\n/g, '')))));
+  const binary = atob(b64.replace(/\n/g, ''));
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
 }
 
 export function useGitHubSync() {
@@ -20,18 +23,26 @@ export function useGitHubSync() {
   const dataRef = useRef(null);
   const debounceRef = useRef(null);
   const pendingSyncRef = useRef(null);
+  const savedStateTimerRef = useRef(null);
 
-  function setToken(tok) {
+  useEffect(() => {
+    return () => {
+      clearTimeout(debounceRef.current);
+      clearTimeout(savedStateTimerRef.current);
+    };
+  }, []);
+
+  const setToken = useCallback((tok) => {
     localStorage.setItem(TOKEN_KEY, tok);
     setTokenState(tok);
-  }
+  }, []);
 
-  function clearToken() {
+  const clearToken = useCallback(() => {
     localStorage.removeItem(TOKEN_KEY);
     setTokenState(null);
-  }
+  }, []);
 
-  async function loadFromGitHub(tok) {
+  const loadFromGitHub = useCallback(async (tok) => {
     try {
       const res = await fetch(`${API}/repos/${REPO}/contents/${FILE_PATH}`, {
         headers: {
@@ -49,7 +60,7 @@ export function useGitHubSync() {
     } catch {
       return null;
     }
-  }
+  }, [clearToken]); // eslint-disable-line
 
   async function writeToGitHub(fullData, tok) {
     setSyncState('syncing');
@@ -74,7 +85,8 @@ export function useGitHubSync() {
       shaRef.current = json.content.sha;
       dataRef.current = fullData;
       setSyncState('saved');
-      setTimeout(() => setSyncState('idle'), 2000);
+      clearTimeout(savedStateTimerRef.current);
+      savedStateTimerRef.current = setTimeout(() => setSyncState('idle'), 2000);
     } catch {
       setSyncState('error');
     }

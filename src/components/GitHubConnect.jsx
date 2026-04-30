@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 
 const CLIENT_ID = 'Ov23liLeGCfRZqC2sUqN';
 const DEVICE_URL = 'https://github.com/login/device';
+// Proxy URL required because GitHub Device Flow endpoints don't support browser CORS.
+// Deploy cloudflare-worker/ and set VITE_GITHUB_PROXY_URL to the worker URL.
+const PROXY_URL = import.meta.env.VITE_GITHUB_PROXY_URL || '';
 
 export function GitHubConnect({ onToken }) {
   const [step, setStep] = useState('idle'); // idle | waiting | error
@@ -23,10 +26,15 @@ export function GitHubConnect({ onToken }) {
 
   async function startAuth() {
     if (startingRef.current) return;
+    if (!PROXY_URL) {
+      setStep('error');
+      setErrorMsg('GitHub proxy not configured. Set VITE_GITHUB_PROXY_URL.');
+      return;
+    }
     startingRef.current = true;
     setErrorMsg('');
     try {
-      const res = await fetch('https://github.com/login/device/code', {
+      const res = await fetch(`${PROXY_URL}/code`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ client_id: CLIENT_ID, scope: 'repo' }),
@@ -40,7 +48,7 @@ export function GitHubConnect({ onToken }) {
 
       async function tick() {
         try {
-          const r = await fetch('https://github.com/login/device/token', {
+          const r = await fetch(`${PROXY_URL}/token`, {
             method: 'POST',
             headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
